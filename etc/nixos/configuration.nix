@@ -174,6 +174,13 @@
   zramSwap.memoryPercent = 150;
   boot.kernel.sysctl."vm.swappiness" = 190;
 
+  # Config Nix's GC
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+    options = "--delete-older-than 1d"
+  }
+  nix.autoOptimiseStore = true;
 
   system.stateVersion = "22.11";
 }
