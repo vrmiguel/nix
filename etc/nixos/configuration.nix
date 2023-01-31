@@ -3,10 +3,14 @@
 
 { config, pkgs, ... }:
 
+let
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz";
+in
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      (import "${home-manager}/nixos")
     ];
 
   # Bootloader configs
@@ -85,6 +89,7 @@
     isNormalUser = true;
     description = "Vinícius R. Miguel";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.fish;
     packages = with pkgs; [
       firefox
       tdesktop
@@ -105,7 +110,9 @@
     pciutils # Provides lspci
 
     # Text editor
-    helix
+ 
+    # Blazingly fast hardware-accelerateed blazingly fast safe Rust terminal
+    alacritty
 
     # Image editing
     gmic
@@ -153,6 +160,12 @@
     # Totally not piracy
     qbittorrent
     stremio
+
+    # Screenshot
+    flameshot
+
+    # The home-manager binary
+    home-manager
   ];
 
 
@@ -193,6 +206,25 @@
     options = "--delete-older-than 1d";
   };
   nix.settings.auto-optimise-store = true;
+
+  # Configuring home-manager
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
+
+  # home-manager option docs: https://nix-community.github.io/home-manager/options.html
+  home-manager.users.vrmiguel = { config, pkgs, ... }: {
+    services.sxhkd.enable = true;
+    services.sxhkd.keybindings = {
+      "ctrl + alt + t" = "alacritty";
+    };
+    services.sxhkd.extraOptions = [ "-c ~/.config/sxhkd/sxhkdrc" ];
+    xsession.enable = true;
+
+    home.stateVersion = "22.11";
+  };
+
 
   system.stateVersion = "22.11";
 }
