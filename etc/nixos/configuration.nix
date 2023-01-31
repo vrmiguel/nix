@@ -114,6 +114,7 @@
          vscodeExtensions = with vscode-extensions; [
              rust-lang.rust-analyzer
              ms-python.python
+             bbenoist.nix
          ];
     })
     xclip
