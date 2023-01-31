@@ -108,9 +108,6 @@
     gimp
     gmic
 
-    # Dotfiles management
-    stow
-
     # Git-related
     gh
     git
@@ -127,16 +124,32 @@
     xclip
   ];
 
-  # List services that you want to enable:
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  environment = {
+    homeBinInPath = true;
+    variables = {
+      PATH = "$HOME/.cargo/bin";
+      VISUAL = "vscode";
+      EDITOR = "hx";
+      RUST_BACKTRACE = "short";
+    };
+  };
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  fonts = {
+    fontDir.enable = true;
+    enableDefaultFonts = true;
+    fonts = with pkgs; [
+      hack-font
+      fira-code
+      ubuntu_font_family
+      inconsolata
+      noto-fonts
+      noto-fonts-emoji
+      jetbrains-mono
+      julia-mono
+    ];
+  };
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

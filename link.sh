@@ -2,7 +2,12 @@
 
 set -e
 
-VCS_CONFIG="etc/nixos/configuration.nix"
+
+DIR="$( dirname -- "${BASH_SOURCE[0]}"; )";   # Get the directory name
+DIR="$( realpath -e -- "$DIR"; )";    # Resolve its full path if need be
+cd "$DIR"
+
+VCS_CONFIG="$DIR/etc/nixos/configuration.nix"
 NIX_CONFIG="/etc/nixos/configuration.nix"
 
 if [[ $UID != 0 ]]; then
@@ -10,13 +15,8 @@ if [[ $UID != 0 ]]; then
     exit 1
 fi
 
-if [ ! -f VCS_CONFIG ] ; then
-    echo "No config file in VCS"
-    exit 1
-fi
-
 echo "> Overwriting configuration.nix"
-cp -f etc/nixos/configuration.nix "$NIX_CONFIG"
+cp -f "$VCS_CONFIG" "$NIX_CONFIG"
 
 
 echo "> Running nixos-rebuild switch"
