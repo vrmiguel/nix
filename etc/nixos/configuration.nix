@@ -1,5 +1,4 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
+# Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
@@ -10,13 +9,12 @@
       ./hardware-configuration.nix
     ];
 
-  # Bootloader.
+  # Bootloader configs
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  networking.hostName = "pepsi-twist"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.hostName = "pepsi-twist";
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -92,7 +90,6 @@
       rustup
       tdesktop
       spotify
-      sublime-merge # lol
     ];
   };
 
@@ -104,12 +101,21 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    # Text editor
     helix
-    stow
-    git
-    gh
+
+    # Image editing
     gimp
     gmic
+
+    # Dotfiles management
+    stow
+
+    # Git-related
+    gh
+    git
+    sublime-merge
+    
     (vscode-with-extensions.override {
          vscodeExtensions = with vscode-extensions; [
              rust-lang.rust-analyzer
@@ -117,15 +123,9 @@
              bbenoist.nix
          ];
     })
+
     xclip
   ];
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
   # List services that you want to enable:
 

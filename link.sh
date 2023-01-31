@@ -15,9 +15,9 @@ if [ ! -f VCS_CONFIG ] ; then
     exit 1
 fi
 
+echo "> Overwriting configuration.nix"
 cp -f etc/nixos/configuration.nix "$NIX_CONFIG"
 
-echo "> Overwrote configuration.nix"
 
 echo "> Running nixos-rebuild switch"
 nixos-rebuild switch
