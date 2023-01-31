@@ -122,7 +122,8 @@
     # Password management
     keepassxc
 
-    # C++ stuff
+    # C++ and further compilation stuff
+    binutils
     clang
     qtcreator
     
@@ -136,6 +137,10 @@
 
     # X11 stuff
     xclip
+
+    # Totally not piracy
+    qbittorrent
+    stremio
   ];
 
 
@@ -163,6 +168,12 @@
       julia-mono
     ];
   };
+
+  # Swap compression configs
+  zramSwap.enable = true;
+  zramSwap.memoryPercent = 150;
+  boot.kernel.sysctl."vm.swappiness" = 190;
+
 
   system.stateVersion = "22.11";
 }
