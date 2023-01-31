@@ -87,7 +87,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       firefox
-      rustup
       tdesktop
       spotify
     ];
@@ -111,6 +110,7 @@
     # Image editing
     gmic
     gmic-qt
+    gwenview
     (gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic ]; })
     rawtherapee
 
@@ -121,11 +121,23 @@
 
     # Password management
     keepassxc
+    authenticator # Gnome Authenticator
 
-    # C++ and further compilation stuff
     binutils
+
+    # Programming
     clang
+    rustup
     qtcreator
+    (python3.withPackages (py: [py.pandas py.requests]))
+    ghc
+
+    # GUI for sound control
+    pavucontrol
+
+    # Video
+    mpv
+    youtube-dl
     
     (vscode-with-extensions.override {
          vscodeExtensions = with vscode-extensions; [
@@ -178,9 +190,9 @@
   nix.gc = {
     automatic = true;
     dates = "daily";
-    options = "--delete-older-than 1d"
-  }
-  nix.autoOptimiseStore = true;
+    options = "--delete-older-than 1d";
+  };
+  nix.settings.auto-optimise-store = true;
 
   system.stateVersion = "22.11";
 }
