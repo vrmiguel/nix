@@ -109,9 +109,18 @@ in
     inxi
     pciutils # Provides lspci
 
-    # Text editor
+    # Text editors
+    helix
+    lapce
+    (vscode-with-extensions.override {
+      vscodeExtensions = with vscode-extensions; [
+        rust-lang.rust-analyzer
+        ms-python.python
+        bbenoist.nix
+      ];
+    })
  
-    # Blazingly fast hardware-accelerateed blazingly fast safe Rust terminal
+    # Blazingly fast hardware-accelerated blazingly fast safe Rust terminal
     alacritty
 
     # Image editing
@@ -145,17 +154,10 @@ in
     # Video
     mpv
     youtube-dl
-    
-    (vscode-with-extensions.override {
-         vscodeExtensions = with vscode-extensions; [
-             rust-lang.rust-analyzer
-             ms-python.python
-             bbenoist.nix
-         ];
-    })
 
     # X11 stuff
     xclip
+    xev
 
     # Totally not piracy
     qbittorrent
@@ -166,6 +168,9 @@ in
 
     # The home-manager binary
     home-manager
+    
+    # PDF reader
+    evince
   ];
 
 
