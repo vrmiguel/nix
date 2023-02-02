@@ -62,6 +62,12 @@ in
     services.screen-locker.inactiveInterval = 1; # 1 min
     services.screen-locker.lockCmd = "i3lock -d -c 000070";
 
+    services.picom = {
+      enable = true;
+      fade = true;
+      vSync = true;
+    };
+
     programs.zsh = {
       enable = true;
       enableAutosuggestions = true;
