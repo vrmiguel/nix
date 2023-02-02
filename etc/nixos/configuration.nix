@@ -163,10 +163,10 @@ in
     alacritty
 
     # Image editing
-    gmic
-    gmic-qt
+    #gmic
+    #gmic-qt
     gwenview
-    (gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic ]; })
+    # (gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic ]; })
     rawtherapee
 
     # Git-related
@@ -176,7 +176,7 @@ in
 
     # Password management
     keepassxc
-    authenticator # Gnome Authenticator
+    # authenticator # Gnome Authenticator
 
     binutils
 
@@ -210,6 +210,9 @@ in
     
     # PDF reader
     evince
+
+    # Applets
+    networkmanagerapplet
   ];
 
 

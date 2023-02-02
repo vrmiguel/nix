@@ -3,6 +3,7 @@
 pcall(require, "luarocks.loader")
 
 -- Standard awesome library
+local awesome, client, screen, root = awesome, client, screen, root
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
@@ -49,8 +50,8 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 TERM = "alacritty"
-editor = os.getenv("EDITOR") or "nano"
-editor_cmd = TERM .. " -e " .. editor
+EDITOR = os.getenv("EDITOR") or "nano"
+EDITOR_CMD = TERM .. " -e " .. EDITOR
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -85,7 +86,7 @@ awful.layout.layouts = {
 MENU = {
     { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
     { "manual", TERM .. " -e man awesome" },
-    { "edit config", editor_cmd .. " " .. awesome.conffile },
+    { "edit config", EDITOR_CMD .. " " .. awesome.conffile },
     { "restart", awesome.restart },
     { "quit", function() awesome.quit() end },
 }
@@ -110,11 +111,11 @@ LAUNCHER = awful.widget.launcher(
 menubar.utils.terminal = TERM -- Set the terminal for applications that require it
 
 -- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
+KEYBOARD_LAYOUT = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+TEXT_CLOCK = wibox.widget.textclock()
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -217,9 +218,9 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
+            KEYBOARD_LAYOUT,
             wibox.widget.systray(),
-            mytextclock,
+            TEXT_CLOCK,
             s.mylayoutbox,
         },
     }
@@ -233,7 +234,7 @@ root.buttons(gears.table.join(
 ))
 
 -- {{{ Key bindings
-globalkeys = gears.table.join(
+GLOBAL_KEYS = gears.table.join(
     awful.key({ MOD_KEY, }, "s", hotkeys_popup.show_help,
         { description = "show help", group = "awesome" }),
     awful.key({ MOD_KEY, }, "Left", awful.tag.viewprev,
@@ -338,7 +339,7 @@ globalkeys = gears.table.join(
         { description = "show the menubar", group = "launcher" })
 )
 
-clientkeys = gears.table.join(
+CLIENT_KEYS = gears.table.join(
     awful.key({ MOD_KEY, }, "f",
         function(c)
             c.fullscreen = not c.fullscreen
@@ -386,7 +387,7 @@ clientkeys = gears.table.join(
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, 9 do
-    globalkeys = gears.table.join(globalkeys,
+    GLOBAL_KEYS = gears.table.join(GLOBAL_KEYS,
         -- View tag only.
         awful.key({ MOD_KEY }, "#" .. i + 9,
             function()
@@ -432,7 +433,7 @@ for i = 1, 9 do
     )
 end
 
-clientbuttons = gears.table.join(
+CLIENT_BUTTONS = gears.table.join(
     awful.button({}, 1, function(c)
         c:emit_signal("request::activate", "mouse_click", { raise = true })
     end),
@@ -447,7 +448,7 @@ clientbuttons = gears.table.join(
 )
 
 -- Set keys
-root.keys(globalkeys)
+root.keys(GLOBAL_KEYS)
 -- }}}
 
 -- {{{ Rules
@@ -459,8 +460,8 @@ awful.rules.rules = {
             border_color = beautiful.border_normal,
             focus = awful.client.focus.filter,
             raise = true,
-            keys = clientkeys,
-            buttons = clientbuttons,
+            keys = CLIENT_KEYS,
+            buttons = CLIENT_BUTTONS,
             screen = awful.screen.preferred,
             placement = awful.placement.no_overlap + awful.placement.no_offscreen
         }
@@ -572,3 +573,5 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+awful.spawn.single_instance("nm-applet")
