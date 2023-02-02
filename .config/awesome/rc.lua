@@ -317,11 +317,11 @@ GLOBAL_KEYS = gears.table.join(
         { description = "restore minimized", group = "client" }),
 
     awful.key({ MOD_KEY }, "r",
-    function ()
-        awful.spawn(string.format("rofi -show drun",
-        beautiful.bg_normal, beautiful.fg_normal, beautiful.bg_focus, beautiful.fg_focus))
-	end,
-    {description = "rofi drun", group = "launcher"}),
+        function()
+            awful.spawn(string.format("rofi -show drun",
+                beautiful.bg_normal, beautiful.fg_normal, beautiful.bg_focus, beautiful.fg_focus))
+        end,
+        { description = "rofi drun", group = "launcher" }),
 
 
     awful.key({ MOD_KEY }, "x",
@@ -381,10 +381,12 @@ CLIENT_KEYS = gears.table.join(
             c:raise()
         end,
         { description = "(un)maximize horizontally", group = "client" }),
-    awful.key({ }, "XF86MonBrightnessDown", function ()
-        awful.util.spawn("light -U 10") end),
-    awful.key({ }, "XF86MonBrightnessUp", function ()
-        awful.util.spawn("light -A 10") end)
+    awful.key({}, "XF86MonBrightnessDown", function()
+        awful.util.spawn("light -U 10")
+    end),
+    awful.key({}, "XF86MonBrightnessUp", function()
+        awful.util.spawn("light -A 10")
+    end)
 )
 
 -- Bind all key numbers to tags.

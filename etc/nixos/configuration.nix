@@ -19,6 +19,7 @@ in
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   networking.hostName = "pepsi-twist";
+  
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -61,7 +62,45 @@ in
     services.screen-locker.inactiveInterval = 1; # 1 min
     services.screen-locker.lockCmd = "i3lock -d -c 000070";
 
+    programs.zsh = {
+      enable = true;
+      enableAutosuggestions = true;
+      enableCompletion = true;
+      enableSyntaxHighlighting = true;
+      history = {
+        # Save timestamps on zsh history
+        extended = true;
+        ignoreDups = true;
+        share = true;
+      };
+
+      oh-my-zsh = {
+        enable = true;
+        plugins = [ "git" "sudo" ];
+        theme = "amuse";
+      };
+
+      # prezto = {
+      #   enable = true;
+      #   caseSensitive = false;
+      # };
+    };
+
     programs.rofi.enable = true;
+    programs.starship.enable = true;
+    programs.starship.settings = {
+      character = {
+        error_symbol = "[❯](bold red)";
+        success_symbol = "[❯](bold grey)";
+      };
+    };
+
+    programs.starship.enableFishIntegration = true;
+    programs.starship.enableZshIntegration = true;
+    programs.starship.enableIonIntegration = false;
+    programs.starship.enableBashIntegration = false;
+
+  
     
     home.stateVersion = "22.11";
   };
@@ -225,6 +264,7 @@ in
 
   environment = {
     homeBinInPath = true;
+    pathsToLink = [ "/share/zsh" ];
     variables = {
       PATH = "$HOME/.cargo/bin";
       VISUAL = "vscode";
