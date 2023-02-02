@@ -41,12 +41,50 @@ in
     LC_TIME = "pt_BR.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # Configuring home-manager
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
 
-  # Enable the KDE Plasma Desktop Environment
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  # home-manager option docs: https://nix-community.github.io/home-manager/options.html
+  home-manager.users.vrmiguel = { config, pkgs, ... }: {
+    xsession.enable = true;
+
+    services.sxhkd.enable = true;
+    services.sxhkd.keybindings = {
+      "ctrl + alt + t" = "alacritty";
+      "print" = "flameshot --gui -c";
+    };
+    services.sxhkd.extraOptions = [ "-c ~/.config/sxhkd/sxhkdrc" ];
+
+    programs.rofi.enable = true;
+
+    home.stateVersion = "22.11";
+  };
+
+  # WM/DE config
+  services.xserver = {
+    # Enable the X11 windowing system.
+    enable = true;
+
+    displayManager = {
+      sddm.enable = true;
+      defaultSession = "none+awesome";
+
+    };
+
+    windowManager.awesome = {
+      enable = true;
+      luaModules = with pkgs.luaPackages; [
+        luarocks # is the package manager for Lua modules
+        luadbi-mysql # Database abstraction layer
+      ];
+    };
+
+    desktopManager.plasma5.enable = true;
+  };
+
 
   # Get Bluetooth working, hopefully
   services.blueman.enable = true;
@@ -117,6 +155,7 @@ in
         rust-lang.rust-analyzer
         ms-python.python
         bbenoist.nix
+        sumneko.lua
       ];
     })
  
@@ -157,7 +196,7 @@ in
 
     # X11 stuff
     xclip
-    xev
+    xorg.xev
 
     # Totally not piracy
     qbittorrent
@@ -211,25 +250,6 @@ in
     options = "--delete-older-than 1d";
   };
   nix.settings.auto-optimise-store = true;
-
-  # Configuring home-manager
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-  };
-
-  # home-manager option docs: https://nix-community.github.io/home-manager/options.html
-  home-manager.users.vrmiguel = { config, pkgs, ... }: {
-    services.sxhkd.enable = true;
-    services.sxhkd.keybindings = {
-      "ctrl + alt + t" = "alacritty";
-    };
-    services.sxhkd.extraOptions = [ "-c ~/.config/sxhkd/sxhkdrc" ];
-    xsession.enable = true;
-
-    home.stateVersion = "22.11";
-  };
-
 
   system.stateVersion = "22.11";
 }
