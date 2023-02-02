@@ -84,11 +84,11 @@ awful.layout.layouts = {
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 MENU = {
-    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-    { "manual", TERM .. " -e man awesome" },
-    { "edit config", EDITOR_CMD .. " " .. awesome.conffile },
-    { "restart", awesome.restart },
-    { "quit", function() awesome.quit() end },
+    { "Hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
+    { "Manual", TERM .. " -e man awesome" },
+    { "Edit config.", EDITOR_CMD .. " " .. "~/nix/.config/awesome/rc.lua" },
+    { "Restart", awesome.restart },
+    { "Log out", function() awesome.quit() end },
 }
 
 MAIN_MENU = awful.menu(
@@ -380,7 +380,11 @@ CLIENT_KEYS = gears.table.join(
             c.maximized_horizontal = not c.maximized_horizontal
             c:raise()
         end,
-        { description = "(un)maximize horizontally", group = "client" })
+        { description = "(un)maximize horizontally", group = "client" }),
+    awful.key({ }, "XF86MonBrightnessDown", function ()
+        awful.util.spawn("light -U 10") end),
+    awful.key({ }, "XF86MonBrightnessUp", function ()
+        awful.util.spawn("light -A 10") end)
 )
 
 -- Bind all key numbers to tags.
@@ -391,8 +395,8 @@ for i = 1, 9 do
         -- View tag only.
         awful.key({ MOD_KEY }, "#" .. i + 9,
             function()
-                local screen = awful.screen.focused()
-                local tag = screen.tags[i]
+                local focused_screen = awful.screen.focused()
+                local tag = focused_screen.tags[i]
                 if tag then
                     tag:view_only()
                 end

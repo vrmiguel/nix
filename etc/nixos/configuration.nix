@@ -51,15 +51,18 @@ in
   home-manager.users.vrmiguel = { config, pkgs, ... }: {
     xsession.enable = true;
 
-    services.sxhkd.enable = true;
-    services.sxhkd.keybindings = {
-      "ctrl + alt + t" = "alacritty";
-      "print" = "flameshot --gui -c";
-    };
-    services.sxhkd.extraOptions = [ "-c ~/.config/sxhkd/sxhkdrc" ];
+    # services.sxhkd.enable = true;
+    # services.sxhkd.keybindings = {
+    #   "ctrl + alt + t" = "alacritty";
+    #   "print" = "flameshot --gui -c";
+    # };
+    # services.sxhkd.extraOptions = [ "-c ~/.config/sxhkd/sxhkdrc" ];
+    services.screen-locker.xautolock.enable = true;
+    services.screen-locker.inactiveInterval = 1; # 1 min
+    services.screen-locker.lockCmd = "i3lock -d -c 000070";
 
     programs.rofi.enable = true;
-
+    
     home.stateVersion = "22.11";
   };
 
@@ -71,7 +74,6 @@ in
     displayManager = {
       sddm.enable = true;
       defaultSession = "none+awesome";
-
     };
 
     windowManager.awesome = {
@@ -84,7 +86,9 @@ in
 
     desktopManager.plasma5.enable = true;
   };
-
+  
+  # For brightness control
+  programs.light.enable = true;
 
   # Get Bluetooth working, hopefully
   services.blueman.enable = true;
@@ -100,7 +104,7 @@ in
   console.keyMap = "br-abnt2";
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.printing.enable = false;
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -126,7 +130,7 @@ in
   users.users.vrmiguel = {
     isNormalUser = true;
     description = "Vinícius R. Miguel";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "video" ];
     shell = pkgs.fish;
     packages = with pkgs; [
       firefox
@@ -213,6 +217,9 @@ in
 
     # Applets
     networkmanagerapplet
+
+    # Lockscreen
+    i3lock
   ];
 
 
