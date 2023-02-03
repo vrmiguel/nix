@@ -340,7 +340,9 @@ GLOBAL_KEYS = gears.table.join(
         { description = "lua execute prompt", group = "awesome" }),
     -- Menubar
     awful.key({ MOD_KEY }, "p", function() menubar.show() end,
-        { description = "show the menubar", group = "launcher" })
+        { description = "show the menubar", group = "launcher" }),
+    awful.key({ MOD_KEY, "Shift" }, "p", function() awful.spawn("flameshot gui -c") end,
+    { description = "show the menubar", group = "launcher" })
 )
 
 CLIENT_KEYS = gears.table.join(
