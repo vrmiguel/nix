@@ -27,14 +27,13 @@ in
 
   networking = {
     wireless.iwd.enable = true;
-    
+
     networkmanager = {
       enable = true;
       wifi.backend = "iwd";
     };
   };
   
- 
 
   # Locale configs
   time.timeZone = "America/Sao_Paulo";
@@ -123,8 +122,6 @@ in
     programs.starship.enableIonIntegration = false;
     programs.starship.enableBashIntegration = false;
 
-  
-    
     home.stateVersion = "22.11";
   };
 
