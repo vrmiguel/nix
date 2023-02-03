@@ -65,6 +65,7 @@ in
     services.picom = {
       enable = true;
       fade = true;
+      fadeDelta = 3;
       vSync = true;
     };
 
@@ -92,7 +93,13 @@ in
       # };
     };
 
-    programs.rofi.enable = true;
+    programs.rofi = {
+      enable = true;
+      location = "bottom-left";
+      theme = "purple";
+      plugins = [ pkgs.rofi-calc ];
+    };
+    
     programs.starship.enable = true;
     programs.starship.settings = {
       character = {

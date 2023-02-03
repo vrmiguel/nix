@@ -321,9 +321,13 @@ GLOBAL_KEYS = gears.table.join(
             awful.spawn(string.format("rofi -show drun",
                 beautiful.bg_normal, beautiful.fg_normal, beautiful.bg_focus, beautiful.fg_focus))
         end,
-        { description = "rofi drun", group = "launcher" }),
-
-
+        { description = "Application launcher", group = "launcher" }),
+    awful.key({ MOD_KEY }, "c",
+        function()
+            awful.spawn(string.format("rofi -show calc",
+                beautiful.bg_normal, beautiful.fg_normal, beautiful.bg_focus, beautiful.fg_focus))
+        end,
+        { description = "Rofi Calc", group = "launcher" }),
     awful.key({ MOD_KEY }, "x",
         function()
             awful.prompt.run {
