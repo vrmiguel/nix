@@ -61,6 +61,7 @@ in
     services.screen-locker.xautolock.enable = true;
     services.screen-locker.inactiveInterval = 1; # 1 min
     services.screen-locker.lockCmd = "i3lock -d -c 000070";
+    services.network-manager-applet.enable = true;
 
     services.picom = {
       enable = true;
@@ -266,9 +267,6 @@ in
     
     # PDF reader
     evince
-
-    # Applets
-    networkmanagerapplet
 
     # Lockscreen
     i3lock
