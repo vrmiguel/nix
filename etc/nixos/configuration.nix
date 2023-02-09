@@ -66,9 +66,20 @@ in
     #   "print" = "flameshot --gui -c";
     # };
     # services.sxhkd.extraOptions = [ "-c ~/.config/sxhkd/sxhkdrc" ];
-    services.screen-locker.xautolock.enable = true;
-    services.screen-locker.inactiveInterval = 1; # 1 min
-    services.screen-locker.lockCmd = "i3lock -d -c 000070";
+    # services.screen-locker.xautolock.enable = true;
+    # 
+    # services.screen-locker.lockCmd = "i3lock -d -c 000070";
+
+    services.screen-locker = {
+      inactiveInterval = 1; # 1 min
+      enable = true;
+      xautolock.enable = false;
+      xss-lock.extraOptions = [
+        "-n ${pkgs.xsecurelock}/libexec/dimmer"
+        "-l"
+      ];
+      lockCmd =  "${pkgs.xsecurelock}/bin/xsecurelock";
+    };
     services.network-manager-applet.enable = true;
 
     services.picom = {
@@ -132,7 +143,7 @@ in
 
     displayManager = {
       sddm.enable = true;
-      defaultSession = "none+awesome";
+      defaultSession = "xfce";
     };
 
     windowManager.awesome = {
@@ -143,7 +154,11 @@ in
       ];
     };
 
-    desktopManager.plasma5.enable = true;
+    desktopManager = { 
+      plasma5.enable = false;
+      xterm.enable = false;
+      xfce.enable = true;
+    };
   };
   
   # For brightness control
@@ -195,8 +210,11 @@ in
       firefox
       tdesktop
       spotify
+      steam
     ];
   };
+
+  programs.steam.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -204,7 +222,7 @@ in
   hardware.enableRedistributableFirmware = true;
 
   # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # $ nix search wgetq
   environment.systemPackages = with pkgs; [
     # HW-probing
     inxi
@@ -244,6 +262,7 @@ in
     binutils
 
     # Programming
+    gcc
     clang
     rustup
     qtcreator
@@ -275,7 +294,15 @@ in
     evince
 
     # Lockscreen
-    i3lock
+    xsecurelock
+
+    # Compression/decompression
+    ouch
+    libzip
+    zlib
+
+    # File manager
+    # thunar
   ];
 
 
