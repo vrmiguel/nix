@@ -3,8 +3,8 @@
 set -e
 
 
-DIR="$( dirname -- "${BASH_SOURCE[0]}"; )";   # Get the directory name
-DIR="$( realpath -e -- "$DIR"; )";    # Resolve its full path if need be
+DIR="$( dirname -- "${BASH_SOURCE[0]}" )" # Get the directory name
+DIR="$( realpath -e -- "$DIR" )"          # Resolve its full path if need be
 cd "$DIR"
 
 AWESOME_CONFIG="$DIR/.config/awesome/rc.lua"
@@ -20,7 +20,6 @@ fi
 
 echo "> Overwriting configuration.nix"
 cp -f "$VCS_CONFIG" "$NIX_CONFIG"
-
 
 echo "> Overwriting Awesome config"
 cp -f "$AWESOME_CONFIG" "/home/vrmiguel/.config/awesome/rc.lua"
