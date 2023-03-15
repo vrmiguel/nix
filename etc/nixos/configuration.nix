@@ -4,6 +4,8 @@
 { config, pkgs, ... }:
 
 let
+  running-on-wayland = false;
+  running-on-xorg = !running-on-wayland;
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz";
 in
 {
@@ -58,7 +60,28 @@ in
 
   # home-manager option docs: https://nix-community.github.io/home-manager/options.html
   home-manager.users.vrmiguel = { config, pkgs, ... }: {
-    xsession.enable = true;
+    xsession.enable = running-on-xorg;
+
+    wayland.windowManager.sway = {
+      enable = running-on-wayland;
+      config = rec {
+        modifier = "Mod4";
+        terminal = "kitty"; 
+        startup = [
+          # Launch Firefox on start
+          {command = "firefox";}
+        ];
+      };
+    };
+
+    programs.i3status-rust = {
+      enable = running-on-wayland;
+      # systemd.enable = true;
+      #icons = "awesome5";
+      #theme = "gruvbox-dark";
+    };
+
+
 
     # services.sxhkd.enable = true;
     # services.sxhkd.keybindings = {
@@ -83,7 +106,7 @@ in
     services.network-manager-applet.enable = true;
 
     services.picom = {
-      enable = true;
+      enable = running-on-xorg;
       fade = true;
       fadeDelta = 3;
       vSync = true;
@@ -139,15 +162,15 @@ in
   # WM/DE config
   services.xserver = {
     # Enable the X11 windowing system.
-    enable = true;
+    enable = running-on-xorg;
 
     displayManager = {
-      sddm.enable = true;
+      sddm.enable = running-on-xorg;
       defaultSession = "xfce";
     };
 
     windowManager.awesome = {
-      enable = true;
+      enable = running-on-xorg;
       luaModules = with pkgs.luaPackages; [
         luarocks # is the package manager for Lua modules
         luadbi-mysql # Database abstraction layer
@@ -155,7 +178,7 @@ in
     };
 
     desktopManager = { 
-      plasma5.enable = false;
+      plasma5.enable = true;
       xterm.enable = false;
       xfce.enable = true;
     };
@@ -215,6 +238,7 @@ in
   };
 
   programs.steam.enable = true;
+  programs.xwayland.enable = running-on-wayland;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -227,6 +251,7 @@ in
     # HW-probing
     inxi
     pciutils # Provides lspci
+    arandr
 
     # Text editors
     helix
@@ -242,6 +267,7 @@ in
  
     # Blazingly fast hardware-accelerated blazingly fast safe Rust terminal
     alacritty
+    kitty
 
     # Image editing
     #gmic
@@ -304,7 +330,6 @@ in
     # File manager
     # thunar
   ];
-
 
   environment = {
     homeBinInPath = true;

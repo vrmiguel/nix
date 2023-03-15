@@ -351,7 +351,7 @@ CLIENT_KEYS = gears.table.join(
             c:raise()
         end,
         { description = "toggle fullscreen", group = "client" }),
-    awful.key({ MOD_KEY, "Shift" }, "c", function(c) c:kill() end,
+    awful.key({ MOD_KEY, "" }, "q", function(c) c:kill() end,
         { description = "close", group = "client" }),
     awful.key({ MOD_KEY, "Control" }, "space", awful.client.floating.toggle,
         { description = "toggle floating", group = "client" }),
@@ -593,3 +593,5 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+awful.spawn.single_instance("battery-alert")
