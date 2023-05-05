@@ -22,7 +22,7 @@ echo "> Overwriting configuration.nix"
 cp -f "$VCS_CONFIG" "$NIX_CONFIG"
 
 echo "> Overwriting Awesome config"
-cp -f "$AWESOME_CONFIG" "/home/vrmiguel/.config/awesome/rc.lua"
+# cp -f "$AWESOME_CONFIG" "/home/vrmiguel/.config/awesome/rc.lua"
 
 echo "> Running nixos-rebuild switch"
 nixos-rebuild switch

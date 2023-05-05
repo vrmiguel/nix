@@ -260,6 +260,7 @@ in
       vscodeExtensions = with vscode-extensions; [
         rust-lang.rust-analyzer
         ms-python.python
+        ms-vsliveshare.vsliveshare
         bbenoist.nix
         sumneko.lua
       ];
@@ -294,6 +295,10 @@ in
     qtcreator
     (python3.withPackages (py: [py.pandas py.requests]))
     ghc
+    postman
+    openssl
+    openssl.dev
+    musl
 
     # GUI for sound control
     pavucontrol
