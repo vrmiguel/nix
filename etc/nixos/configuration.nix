@@ -166,7 +166,7 @@ in
 
     displayManager = {
       sddm.enable = running-on-xorg;
-      defaultSession = "xfce";
+      defaultSession = "plasma";
     };
 
     windowManager.awesome = {
@@ -179,8 +179,7 @@ in
 
     desktopManager = { 
       plasma5.enable = true;
-      xterm.enable = false;
-      xfce.enable = true;
+      xterm.enable = true;
     };
   };
   
@@ -220,7 +219,7 @@ in
     #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
+  # Enable touchpad support (enabled default in most desktop managers).
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -299,6 +298,8 @@ in
     openssl
     openssl.dev
     musl
+    pkg-config
+    protobuf    
 
     # GUI for sound control
     pavucontrol
@@ -310,6 +311,7 @@ in
     # X11 stuff
     xclip
     xorg.xev
+    kwin
 
     # Totally not piracy
     qbittorrent
