@@ -230,7 +230,9 @@ in
     shell = pkgs.fish;
     packages = with pkgs; [
       firefox
+      google-chrome
       tdesktop
+      slack
       spotify
       steam
     ];
