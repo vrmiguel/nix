@@ -299,8 +299,8 @@ in
     postman
     openssl
     openssl.dev
-    musl
     pkg-config
+    musl
     protobuf    
 
     # GUI for sound control
