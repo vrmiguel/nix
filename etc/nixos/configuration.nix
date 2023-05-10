@@ -301,7 +301,10 @@ in
     openssl.dev
     pkg-config
     musl
-    protobuf    
+    musl.dev
+    protobuf
+    ripgrep
+    google-cloud-sdk
 
     # GUI for sound control
     pavucontrol
