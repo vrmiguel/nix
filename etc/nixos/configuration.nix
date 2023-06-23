@@ -6,7 +6,7 @@
 let
   running-on-wayland = false;
   running-on-xorg = !running-on-wayland;
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz";
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-23.05.tar.gz";
 in
 {
   imports =
@@ -143,19 +143,6 @@ in
       plugins = [ pkgs.rofi-calc ];
     };
     
-    programs.starship.enable = true;
-    programs.starship.settings = {
-      character = {
-        error_symbol = "[❯](bold red)";
-        success_symbol = "[❯](bold grey)";
-      };
-    };
-
-    programs.starship.enableFishIntegration = true;
-    programs.starship.enableZshIntegration = true;
-    programs.starship.enableIonIntegration = false;
-    programs.starship.enableBashIntegration = false;
-
     home.stateVersion = "22.11";
   };
 
@@ -227,18 +214,32 @@ in
     isNormalUser = true;
     description = "Vinícius R. Miguel";
     extraGroups = [ "networkmanager" "wheel" "video" ];
-    shell = pkgs.fish;
+    shell = pkgs.bash;
     packages = with pkgs; [
       firefox
       google-chrome
       tdesktop
-      slack
+      spotify
+      steam
+    ];
+  };
+
+  users.users.izzy = {
+    isNormalUser = true;
+    description = "Isabelle Trindade";
+    extraGroups = [ "networkmanager" "wheel" "video" ];
+    shell = pkgs.bash;
+    packages = with pkgs; [
+      firefox
+      google-chrome
+      tdesktop
       spotify
       steam
     ];
   };
 
   programs.steam.enable = true;
+  programs.fish.enable = false;
   programs.xwayland.enable = running-on-wayland;
 
   # Allow unfree packages
@@ -266,16 +267,17 @@ in
         sumneko.lua
       ];
     })
+    sublime3
  
     # Blazingly fast hardware-accelerated blazingly fast safe Rust terminal
     alacritty
     kitty
 
     # Image editing
-    #gmic
+    gmic
     #gmic-qt
     gwenview
-    # (gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic ]; })
+    (gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic ]; })
     rawtherapee
 
     # Git-related
@@ -294,6 +296,7 @@ in
     clang
     rustup
     qtcreator
+      
     (python3.withPackages (py: [py.pandas py.requests]))
     ghc
     postman
@@ -305,11 +308,18 @@ in
     protobuf
     ripgrep
     google-cloud-sdk
+    cmake
+    gnumake
+    slack
+    zoom-us
+
+    # Dependencies for `plotters`
+    fontconfig freetype expat libxml2
 
     # GUI for sound control
     pavucontrol
 
-    # Video
+    # Videoclang
     mpv
     youtube-dl
 
@@ -351,6 +361,7 @@ in
       VISUAL = "vscode";
       EDITOR = "hx";
       RUST_BACKTRACE = "short";
+      OPENSSL_DEV=pkgs.openssl.dev;
     };
   };
 
